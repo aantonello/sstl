@@ -1,0 +1,25 @@
+libsstl="$WORKHOME/plx/src/libsstl" CD=. in=onload.vim enc="utf8" {
+ docs=docs {
+  custom.css
+ }
+ source=source {
+  libsstl.h
+  private=. {
+   stdplx.hpp
+   doxyfile.h
+  }
+  functors=. {
+   sstlfunc.hpp
+  }
+  properties=. {
+   sstlprop.hpp
+  }
+ }
+ .gvimrc
+ .gitignore
+ onload.vim
+ doxyfile
+ README.md
+ Makefile
+ ChangeLog
+}

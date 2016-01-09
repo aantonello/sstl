@@ -1,0 +1,7 @@
+/*
+ * Overrule the 'code' tag.
+ */
+code {
+    color: darkgreen;
+}
+

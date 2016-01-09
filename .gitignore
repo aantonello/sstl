@@ -1,0 +1,10 @@
+.*.sw?
+.DS_Store
+libssqt.dxt
+build.log
+doxygen_sqlite3.db
+ChangeLog
+
+bin/
+docs/help/
+
