@@ -13,5 +13,6 @@
 
 #include "sstlfunc.hpp"
 #include "sstlprop.hpp"
+#include "sstleven.hpp"
 
 #endif /* __LIBSSTL_H_DEFINED__ */

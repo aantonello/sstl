@@ -153,6 +153,20 @@ public:
         return (m_host == ptr);
     }
     /*}}}*/
+    // bool valid() const { }/*{{{*/
+    /**
+     * Checks whether this object is valid.
+     * @returns \b true if this object was bound to a host class and member
+     * function. \b false otherwise.
+     * @note This function doesn't valid the target object and member
+     * function. Only checks whether this functor was bound. The host object
+     * must be valid until this functor is destroyed.
+     * @since 1.0
+     **/
+    bool valid() const {
+        return ((m_host != NULL) && (m_call != NULL));
+    }
+    /*}}}*/
     //@}
 
     /** @name Operations */ //@{
@@ -434,6 +448,20 @@ public:
      **/
     bool isHost(void *ptr) const {
         return (m_host == ptr);
+    }
+    /*}}}*/
+    // bool valid() const { }/*{{{*/
+    /**
+     * Checks whether this object is valid.
+     * @returns \b true if this object was bound to a host class and member
+     * function. \b false otherwise.
+     * @note This function doesn't valid the target object and member
+     * function. Only checks whether this functor was bound. The host object
+     * must be valid until this functor is destroyed.
+     * @since 1.0
+     **/
+    bool valid() const {
+        return ((m_host != NULL) && (m_call != NULL));
     }
     /*}}}*/
     //@}

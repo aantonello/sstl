@@ -135,6 +135,64 @@
  **/
 
 /**
+ * @defgroup sstl_events Event System
+ * Simple yet useful event system.
+ * The event system is built using the functors declared in the @ref
+ * sstl_functors module. An event is just another kind of functor object that
+ * can be bound to a list of functors having the same function signature. For
+ * example, support you have an object that has an indexed list of objects.
+ * Every time the current selected index changes you could adivese all bound
+ * objects through an event. You could write your class like this:
+ ~~~~~~~~~~~~~~~~~~~~~{.cpp}
+ * class IndexedList
+ * {
+ * public:
+ *     ss::EventT<int> onSelectedChanged;
+ *
+ *     void select(int index)
+ *     {
+ *         if (index != m_currentIndex)
+ *         {
+ *             m_currentIndex = index;
+ *             onSelectedChanged(m_currentIndex);
+ *         }
+ *     }
+ * private:
+ *     int m_currentIndex;
+ * };
+ ~~~~~~~~~~~~~~~~~~~~~
+ * In the function `select(int)` above, when the current selected object is
+ * really changed, the function updates the member variable and call the
+ * `operator()` of the event object. All objects bound to that event will
+ * receive the index of the selected item.
+ *
+ * To bound functions on the above example clients must declare a function
+ * with the same signature as the event. Then create a functor object or use
+ * the `ss::EventT::bind()` function.
+ ~~~~~~~~~~~~~~~~~~~~~{.cpp}
+ * class MyObject
+ * {
+ * private:
+ *     void whenSelectionChanges(int currentIndex);
+ *     IndexedList m_list;
+ *
+ * public:
+ *     MyObject()
+ *     {
+ *         m_list.onSelectedChanged << ss::FunctorT<void(int)>::from<MyObject, MyObject::whenSelectionChanges>(this);
+ *         // OR...
+ *         m_list.onSelectedChanged.bind<MyObject, MyObject::whenSelectionChanges>(this);
+ *     }
+ * };
+ ~~~~~~~~~~~~~~~~~~~~~
+ * Notice that events are not thread safe and cannot be used to cross thread
+ * communication. Also, objects bound to functors bound to events must remain
+ * valid white the event is valid. You must remove the bound delegate from the
+ * event list when an object is destroyed before the event it self.
+ * @since 1.0
+ **/
+
+/**
  * @namespace ss
  * Default namespace.
  * Almost all public classes are declared in this namespace. The main idea is
