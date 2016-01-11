@@ -23,20 +23,34 @@ namespace ss {
  * parameter and no return value. Since the event can be bound to a list of
  * functions, the return value will never be used and all bound functions
  * should return \b void.
+ * @tparam _Signature_t The signature of the functions to handle this event.
+ * Example: `EventT<void(int)> onSelected;` declares an event to call
+ * functions returning void and accepting an \b int as parameter.
+ * @remarks We could simplify the declaration to the single parameter of the
+ * function since there is no reason to create events returning non-void
+ * values. We choose to require the function signature to make the event
+ * declaration more easy to read and understand.
+ * @since 1.0
+ *//* --------------------------------------------------------------------- */
+template <typename _Signature_t> class EventT;
+
+/**
+ * Specialization of the EventT template for functions with a parameter.
+ * @tparam _Return_t The return type of the function. Should be \b void.
  * @tparam _Param_t Type of the parameter to pass to each bound functor.
  * @since 1.0
  * @ingroup sstl_events
  *//* --------------------------------------------------------------------- */
-template <typename _Param_t>
-class EventT
+template <typename _Return_t, typename _Param_t>
+class EventT<_Return_t (_Param_t)>
 {
 public:
-    // typedef typename ss::FunctorT<void (_Param_t)> Delegate;/*{{{*/
+    // typedef typename ss::FunctorT<_Return_t (_Param_t)> Delegate;/*{{{*/
     /**
      * Type of the delegate to be bound to this event.
      * Functors must be of this type to be bound to this event object.
      **/
-    typedef typename ss::FunctorT<void (_Param_t)> Delegate;
+    typedef typename ss::FunctorT<_Return_t (_Param_t)> Delegate;
     /*}}}*/
 
     /** @name Constructors */ //@{
@@ -71,7 +85,7 @@ public:
      * _Method will be called.
      * @since 1.0
      **/
-    template <class _Target_t, void (_Target_t::*_Method)(_Param_t)>
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(_Target_t *target) {
         m_delegates.push_back(Delegate::from<_Target_t, _Method>(target));
     }
@@ -140,19 +154,20 @@ private:
 /**
  * Specialization of the EventT template class for functions with no
  * parameters.
+ * @tparam _Return_t The return type of the function. Should be void.
  * @since 1.0
  * @ingroup sstl_events
  *//* --------------------------------------------------------------------- */
-template <>
-class EventT
+template <typename _Return_t>
+class EventT<_Return_t ()>
 {
 public:
-    // typedef typename ss::FunctorT<void ()> Delegate;/*{{{*/
+    // typedef typename ss::FunctorT<_Return_t ()> Delegate;/*{{{*/
     /**
      * Type of the delegate to be bound to this event.
      * Functors must be of this type to be bound to this event object.
      **/
-    typedef typename ss::FunctorT<void ()> Delegate;
+    typedef typename ss::FunctorT<_Return_t ()> Delegate;
     /*}}}*/
 
     /** @name Constructors */ //@{
@@ -187,7 +202,7 @@ public:
      * _Method will be called.
      * @since 1.0
      **/
-    template <class _Target_t, void (_Target_t::*_Method)()>
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t *target) {
         m_delegates.push_back(Delegate::from<_Target_t, _Method>(target));
     }

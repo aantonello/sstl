@@ -147,7 +147,7 @@
  * class IndexedList
  * {
  * public:
- *     ss::EventT<int> onSelectedChanged;
+ *     ss::EventT<void(int)> onSelectedChanged;
  *
  *     void select(int index)
  *     {
