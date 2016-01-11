@@ -31,6 +31,7 @@ namespace ss {
  * values. We choose to require the function signature to make the event
  * declaration more easy to read and understand.
  * @since 1.0
+ * @ingroup sstl_events
  *//* --------------------------------------------------------------------- */
 template <typename _Signature_t> class EventT;
 
