@@ -11,6 +11,7 @@
 #ifndef __SSTLEVEN_HPP_DEFINED__
 #define __SSTLEVEN_HPP_DEFINED__
 
+#include <list>
 #include "sstlfunc.hpp"
 
 namespace ss {
@@ -88,7 +89,27 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(_Target_t *target) {
-        m_delegates.push_back(Delegate::from<_Target_t, _Method>(target));
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(target);
+        m_delegates.push_back( delegate );
+    }
+    /*}}}*/
+    // void bind(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
+    void bind(const _Target_t *target) {
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        m_delegates.push_back( delegate );
     }
     /*}}}*/
     // void unbound(_Target_t *target);/*{{{*/
@@ -104,7 +125,7 @@ public:
      **/
     template <class _Target_t>
     void unbound(_Target_t *target) {
-        std::list<Delegate>::iterator it = m_delegates.begin();
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
         while (it != m_delegates.end())
         {
             if ((*it).isHost((void *)target))
@@ -140,10 +161,12 @@ public:
      * @since 1.0
      **/
     void operator ()(_Param_t param) {
-        std::list< Delegate >::iterator it = m_delegates.begin();
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
 
-        while (it != m_delegates.end())
+        while (it != m_delegates.end()) {
             (*it).exec(param);
+            ++it;
+        }
     }
     /*}}}*/
     //@}
@@ -205,7 +228,27 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t *target) {
-        m_delegates.push_back(Delegate::from<_Target_t, _Method>(target));
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(target);
+        m_delegates.push_back( delegate );
+    }
+    /*}}}*/
+    // void bind(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
+    void bind(_Target_t const *target) {
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        m_delegates.push_back( delegate );
     }
     /*}}}*/
     // void unbound(_Target_t *target);/*{{{*/
@@ -221,7 +264,7 @@ public:
      **/
     template <class _Target_t>
     void unbound(_Target_t *target) {
-        std::list<Delegate>::iterator it = m_delegates.begin();
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
         while (it != m_delegates.end())
         {
             if ((*it).isHost((void *)target))
@@ -254,10 +297,12 @@ public:
      * @since 1.0
      **/
     void operator ()() {
-        std::list< Delegate >::iterator it = m_delegates.begin();
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
 
-        while (it != m_delegates.end())
+        while (it != m_delegates.end()) {
             (*it).exec();
+            ++it;
+        }
     }
     /*}}}*/
     //@}

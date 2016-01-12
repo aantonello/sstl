@@ -193,6 +193,23 @@
  **/
 
 /**
+ * @defgroup sstl_shared Shared Pointer
+ * Group por simplified shared pointer template classes.
+ * Currently this group has only one template class: the `ss::SharedT`. It is
+ * able to share a single pointer among multiple references managing the life
+ * time of that pointer until the last reference is released. Since it is
+ * a typed pointer any object (class or structure) can be held and kept.
+ * Although it will work with pointers of `std::list` or `std::vector` it will
+ * not work with arrays of scalar types (`int[]`, `char[]`, etc...).
+ *
+ * Since this is a simplified version it will never allocate memory for the
+ * underlining object. You must do that. Also, there is no automatic
+ * conversion of pointers to `ss::SharedT` class. The constructor that accepts
+ * the pointer to the object to be shared is \e explicit.
+ * @since 1.0
+ **/
+
+/**
  * @namespace ss
  * Default namespace.
  * Almost all public classes are declared in this namespace. The main idea is

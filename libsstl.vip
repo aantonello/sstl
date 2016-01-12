@@ -8,6 +8,9 @@ libsstl="$WORKHOME/plx/src/libsstl" CD=. in=onload.vim enc="utf8" {
    stdplx.hpp
    doxyfile.h
   }
+  shared pointer=. {
+   sstlshrp.hpp
+  }
   functors=. {
    sstlfunc.hpp
   }

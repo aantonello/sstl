@@ -11,6 +11,7 @@
 #ifndef __LIBSSTL_H_DEFINED__
 #define __LIBSSTL_H_DEFINED__
 
+#include "sstlshrp.hpp"
 #include "sstlfunc.hpp"
 #include "sstlprop.hpp"
 #include "sstleven.hpp"
