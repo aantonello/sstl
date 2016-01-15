@@ -135,6 +135,19 @@
  **/
 
 /**
+ * @defgroup sstl_properties_operators Properties Operators
+ * Non-member overloaded operators for property objects.
+ * These are overloaded comparison operators allowing to compare the several
+ * property objects with each other. Working with property are not very ease
+ * since they are objects that has standard behavior in the language and that
+ * behavior is not intended to be used to represent existing types. In our
+ * opinion properties really should be a sintax-sugar in the language and not
+ * a class/template construction.
+ * @since 1.0
+ * @ingroup sstl_properties
+ **/
+
+/**
  * @defgroup sstl_events Event System
  * Simple yet useful event system.
  * The event system is built using the functors declared in the @ref
