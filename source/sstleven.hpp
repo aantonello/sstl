@@ -37,6 +37,157 @@ namespace ss {
 template <typename _Signature_t> class EventT;
 
 /**
+ * Specialization of the EventT template class for functions with two
+ * arguments.
+ * @tparam _Return_t The return type of the function. Should be void.
+ * @tparam _Param1_t Type of first function parameter.
+ * @tparam _Param2_t Type of second function parameter.
+ * @since 1.0
+ * @ingroup sstl_events
+ *//* --------------------------------------------------------------------- */
+template <typename _Return_t, typename _Param1_t, typename _Param2_t>
+class EventT<_Return_t (_Param1_t, _Param2_t)>
+{
+public:
+    // typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t)> Delegate;/*{{{*/
+    /**
+     * Type of the delegate to be bound to this event.
+     * Functors must be of this type to be bound to this event object.
+     **/
+    typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t)> Delegate;
+    /*}}}*/
+
+    /** @name Constructors */ //@{
+    // EventT();/*{{{*/
+    /**
+     * Default constructor.
+     * @since 1.0
+     **/
+    EventT() { }
+    /*}}}*/
+    //@}
+
+    /** @name Attributes */ //@{
+    // size_t count() const;/*{{{*/
+    /**
+     * Retrieves the number of bound functors.
+     * @returns A `size_t` value with the number of bound functors.
+     * @since 1.0
+     **/
+    size_t count() const { return m_delegates.size(); }
+    /*}}}*/
+    //@}
+
+    /** @name Operations */ //@{
+    // void bind(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void bind(_Target_t *target) {
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(target);
+        m_delegates.push_back( delegate );
+    }
+    /*}}}*/
+    // void bind(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void bind(_Target_t const *target) {
+        Delegate delegate;
+        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        m_delegates.push_back( delegate );
+    }
+    /*}}}*/
+    // void unbound(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the delegate list.
+     * @tparam _Target_t Type of the target class object which member function
+     * was used to create the delegate. This template parameter may not be
+     * defined. The compiler can deduce it through the function parameter.
+     * @param target Pointer to the object instance that was used to create
+     * the delegate object. All delegates with this target object will be
+     * removed.
+     * @since 1.0
+     **/
+    template <class _Target_t>
+    void unbound(_Target_t *target) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end())
+        {
+            if ((*it).isHost((void *)target))
+                it = m_delegates.erase(it);
+            else
+                ++it;
+        }
+    }
+    /*}}}*/
+    // void trigger(_Param1_t a1, _Param2_t a2);/*{{{*/
+    /**
+     * Trigger the functions bound to this event object.
+     * @param a1 Argument to pass as the first parameter.
+     * @param a2 Argument to pass as the second parameter.
+     * @since 1.0
+     **/
+    void trigger(_Param1_t a1, _Param2_t a2) {
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
+
+        while (it != m_delegates.end()) {
+            (*it).exec(a1, a2);
+            ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Overloaded Operators */ //@{
+    // EventT& operator <<(const Delegate &delegate);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param delegate The delegate object to be added.
+     * @return A reference to this event instance.
+     * @since 1.0
+     **/
+    EventT& operator <<(const Delegate &delegate) {
+        m_delegates.push_back(delegate);
+        return *this;
+    }
+    /*}}}*/
+    // void operator ()(_Param1_t a1, _Param2_t a2);/*{{{*/
+    /**
+     * Invokes all delegates in the list of this event.
+     * @param a1 Argument for first function parameter.
+     * @param a2 Argument for second function parameter.
+     * @remarks All bound functors will be called in the same sequence as they
+     * was added to the list.
+     * @since 1.0
+     **/
+    void operator ()(_Param1_t a1, _Param2_t a2) {
+        this->trigger(a1, a2);
+    }
+    /*}}}*/
+    //@}
+
+private:
+    std::list<Delegate> m_delegates;
+};
+
+/**
  * Specialization of the EventT template for functions with a parameter.
  * @tparam _Return_t The return type of the function. Should be \b void.
  * @tparam _Param_t Type of the parameter to pass to each bound functor.
@@ -135,6 +286,21 @@ public:
         }
     }
     /*}}}*/
+    // void trigger(_Param_t param);/*{{{*/
+    /**
+     * Trigger the functions bound to this event object.
+     * @param param Argument to pass to the function.
+     * @since 1.0
+     **/
+    void trigger(_Param_t param) {
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
+
+        while (it != m_delegates.end()) {
+            (*it).exec(param);
+            ++it;
+        }
+    }
+    /*}}}*/
     //@}
 
     /** @name Overloaded Operators */ //@{
@@ -161,12 +327,7 @@ public:
      * @since 1.0
      **/
     void operator ()(_Param_t param) {
-        typename std::list< Delegate >::iterator it = m_delegates.begin();
-
-        while (it != m_delegates.end()) {
-            (*it).exec(param);
-            ++it;
-        }
+        this->trigger(param);
     }
     /*}}}*/
     //@}
@@ -274,6 +435,20 @@ public:
         }
     }
     /*}}}*/
+    // void trigger();/*{{{*/
+    /**
+     * Trigger the functions bound to this event object.
+     * @since 1.0
+     **/
+    void trigger() {
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
+
+        while (it != m_delegates.end()) {
+            (*it).exec();
+            ++it;
+        }
+    }
+    /*}}}*/
     //@}
 
     /** @name Overloaded Operators */ //@{
@@ -297,12 +472,7 @@ public:
      * @since 1.0
      **/
     void operator ()() {
-        typename std::list< Delegate >::iterator it = m_delegates.begin();
-
-        while (it != m_delegates.end()) {
-            (*it).exec();
-            ++it;
-        }
+        this->trigger();
     }
     /*}}}*/
     //@}
