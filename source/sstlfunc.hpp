@@ -288,6 +288,18 @@ public:
         return (m_host == NULL || m_call == NULL);
     }
     /*}}}*/
+    // bool operator ==(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) const;/*{{{*/
+    /**
+     * Comparison operator.
+     * @param other Another instance to compare with.
+     * @return \b true if both instances points to the same host and function.
+     * \b false otherwise.
+     * @since 1.0
+     **/
+    bool operator ==(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) const {
+        return ((m_host == other.m_host) && (m_call == other.m_call));
+    }
+    /*}}}*/
     //@}
 
 private:
@@ -587,6 +599,18 @@ public:
         return (m_host == NULL || m_call == NULL);
     }
     /*}}}*/
+    // bool operator ==(const FunctorT<_Return_t (_Param_t)> &other) const;/*{{{*/
+    /**
+     * Comparison operator.
+     * @param other Another instance to compare with.
+     * @return \b true if both instances points to the same host and function.
+     * \b false otherwise.
+     * @since 1.0
+     **/
+    bool operator ==(const FunctorT<_Return_t (_Param_t)> &other) const {
+        return ((m_host == other.m_host) && (m_call == other.m_call));
+    }
+    /*}}}*/
     //@}
 
 private:
@@ -880,6 +904,18 @@ public:
      **/
     bool operator !() const {
         return (m_host == NULL || m_call == NULL);
+    }
+    /*}}}*/
+    // bool operator ==(const FunctorT<_Return_t ()> &other) const;/*{{{*/
+    /**
+     * Comparison operator.
+     * @param other Another instance to compare with.
+     * @return \b true if both instances points to the same host and function.
+     * \b false otherwise.
+     * @since 1.0
+     **/
+    bool operator ==(const FunctorT<_Return_t ()> &other) const {
+        return ((m_host == other.m_host) && (m_call == other.m_call));
     }
     /*}}}*/
     //@}
