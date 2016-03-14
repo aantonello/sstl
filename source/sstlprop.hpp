@@ -988,6 +988,46 @@ private:
 
 }   /* namespace ss */
 
+// #define ssplink(_Property_, _Pointer_, _Type_, _Getter_, _Setter_) \/*{{{*/
+/**
+ * Links getter and setter functions to a `ss::PropertyT` object.
+ * @param _Property_ The property object instance.
+ * @param _Pointer_ Pointer to the class instance defining the getter and
+ * setter member functions.
+ * @param _Type_ Type of the object pointed by \a _Pointer_.
+ * @param _Getter_ Name of the getter member function. Just the name.
+ * @param _Setter_ Name of the setter member function. Just the name.
+ * @remarks This macro constructs the call to `ss::PropertyT::bind()` function
+ * packing the passed parameters. An example explains better how to use this
+ * macro:
+ * ~~~~~~~~~~~~~~~~~~~~~{.cpp}
+ * class MyObject {
+ * public:
+ *     ss::PropertyT<int> intProperty;
+ *
+ *     MyObject() {
+ *         ssplink(intProperty, this, MyObject, get_int, set_int);
+ *         // This will print the code:
+ *         intProperty.bind<MyObject, &MyObject::get_int, &MyObject::set_int>(this);
+ *     }
+ * private:
+ *     int get_int() const {
+ *         return m_intMember;
+ *     }
+ *     void set_int(int val) {
+ *         m_intMember = val;
+ *     }
+ *     int m_intMember;
+ * };
+ * ~~~~~~~~~~~~~~~~~~~~~
+ * This macro works for both `ss::PropertyT` and `rw::PropertyT` properties
+ * objects.
+ * @since 1.0
+ **/
+#define ssplink(_Property_, _Pointer_, _Type_, _Getter_, _Setter_) \
+    _Property_.bind<_Type_, &_Type_::_Getter_, &_Type_::_Setter_>(_Pointer_)
+/*}}}*/
+
 namespace rw {
 /**
  * Read write property class template.

@@ -137,6 +137,18 @@ public:
         }
     }
     /*}}}*/
+    // void link(EventT<_Return_t (_Param1_t, _Param2_t)> *e);/*{{{*/
+    /**
+     * Link an event to this event.
+     * @param e Pointer to the event object instance to link. Must have the
+     * same return value and parameters of this event.
+     * @since 1.0
+     **/
+    void link(EventT<_Return_t (_Param1_t, _Param2_t)> *e) {
+        bind<EventT<_Return_t (_Param1_t, _Param2_t)>,
+            &EventT<_Return_t (_Param1_t, _Param2_t)>::trigger>(e);
+    }
+    /*}}}*/
     // void trigger(_Param1_t a1, _Param2_t a2);/*{{{*/
     /**
      * Trigger the functions bound to this event object.
@@ -286,6 +298,17 @@ public:
         }
     }
     /*}}}*/
+    // void link(EventT<_Return_t (_Param_t)> *e);/*{{{*/
+    /**
+     * Link an event to this event.
+     * @param e Pointer to the event object instance to link. Must have the
+     * same return value and parameters of this event.
+     * @since 1.0
+     **/
+    void link(EventT<_Return_t (_Param_t)> *e) {
+        bind<EventT<_Return_t (_Param_t)>, &EventT<_Return_t (_Param_t)>::trigger>(e);
+    }
+    /*}}}*/
     // void trigger(_Param_t param);/*{{{*/
     /**
      * Trigger the functions bound to this event object.
@@ -433,6 +456,17 @@ public:
             else
                 ++it;
         }
+    }
+    /*}}}*/
+    // void link(EventT<_Return_t ()> *e);/*{{{*/
+    /**
+     * Link an event to this event.
+     * @param e Pointer to the event object instance to link. Must have the
+     * same return value and parameters of this event.
+     * @since 1.0
+     **/
+    void link(EventT<_Return_t ()> *e) {
+        bind<EventT<_Return_t ()>, &EventT<_Return_t ()>::trigger>(e);
     }
     /*}}}*/
     // void trigger();/*{{{*/
