@@ -71,6 +71,23 @@ public:
         m_set  = &setter<_Host_t, _Setter>;
     }
     /*}}}*/
+    // void bind(_Host_t const *host) { }/*{{{*/
+    /**
+     * Binds the property with the member functions in the host object.
+     * This overloaded version is selected when the getter function is const.
+     * @tparam _Host_t Type of the host object.
+     * @tparam _Getter Pointer to the getter function.
+     * @tparam _Setter Pointer to the setter function.
+     * @param host Pointer to the instance of the host object.
+     * @since 1.0
+     **/
+    template <class _Host_t, _Value_t (_Host_t::*_Getter)() const, _Host_t& (_Host_t::*_Setter)(_Value_t)>
+    void bind(_Host_t const *host) {
+        m_host = (void *)const_cast<_Host_t*>(host);
+        m_get  = &constget<_Host_t, _Getter>;
+        m_set  = &setret<_Host_t, _Setter>;
+    }
+    /*}}}*/
     // _Value_t get() const;/*{{{*/
     /**
      * Executes the getter function.
@@ -979,6 +996,21 @@ private:
         (p->*_Method)(value);
     }
     /*}}}*/
+    // static void setret(void *host, _Value_t value) { }/*{{{*/
+    /**
+     * Calls the setter member function in \a host.
+     * @tparam _Host_t The type of the host object.
+     * @tparam _Method The member function to call.
+     * @param host Pointer to the host instance.
+     * @param value The value to pass to the member function.
+     * @since 1.0
+     **/
+    template <class _Host_t, _Host_t& (_Host_t::*_Method)(_Value_t)>
+    static void setret(void *host, _Value_t value) {
+        _Host_t *p = static_cast<_Host_t*>(host);
+        (p->*_Method)(value);
+    }
+    /*}}}*/
 
     // Data Members
     void *m_host;           /**< Void pointer to the host object. */
@@ -1093,6 +1125,23 @@ public:
         m_host = (void *)const_cast<_Host_t*>(host);
         m_get  = &constget<_Host_t, _Getter>;
         m_set  = &setter<_Host_t, _Setter>;
+    }
+    /*}}}*/
+    // void bind(_Host_t *host) { }/*{{{*/
+    /**
+     * Binds the property with the member functions in the host object.
+     * This overloaded version is selected when the getter function is const.
+     * @tparam _Host_t Type of the host object.
+     * @tparam _Getter Pointer to the getter function.
+     * @tparam _Setter Pointer to the setter function.
+     * @param host Pointer to the instance of the host object.
+     * @since 1.0
+     **/
+    template <class _Host_t, _Value_t (_Host_t::*_Getter)() const, _Host_t& (_Host_t::*_Setter)(_Param_t)>
+    void bind(_Host_t const *host) {
+        m_host = (void *)const_cast<_Host_t*>(host);
+        m_get  = &constget<_Host_t, _Getter>;
+        m_set  = &setret<_Host_t, _Setter>;
     }
     /*}}}*/
     // _Value_t get() const;/*{{{*/
@@ -1303,6 +1352,21 @@ private:
      **/
     template <class _Host_t, void (_Host_t::*_Method)(_Param_t)>
     static void setter(void *host, _Param_t value) {
+        _Host_t *p = static_cast<_Host_t*>(host);
+        (p->*_Method)(value);
+    }
+    /*}}}*/
+    // static void setret(void *host, _Value_t value) { }/*{{{*/
+    /**
+     * Calls the setter member function in \a host.
+     * @tparam _Host_t The type of the host object.
+     * @tparam _Method The member function to call.
+     * @param host Pointer to the host instance.
+     * @param value The value to pass to the member function.
+     * @since 1.0
+     **/
+    template <class _Host_t, _Host_t& (_Host_t::*_Method)(_Param_t)>
+    static void setret(void *host, _Param_t value) {
         _Host_t *p = static_cast<_Host_t*>(host);
         (p->*_Method)(value);
     }

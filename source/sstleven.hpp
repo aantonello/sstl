@@ -167,6 +167,116 @@ public:
     /*}}}*/
     //@}
 
+    /** @name Helpers */ //@{
+    // void add(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void add(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        add( d );
+    }
+    /*}}}*/
+    // void add(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void add(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( d );
+    }
+    /*}}}*/
+    // void add(const Delegate &callback);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param callback A reference to the Delegate object to add. The function
+     * will search the internal list of delegates, if this object was already
+     * added the function does nothing. That is, the same delegate will not be
+     * added twice to the same event.
+     * @since 1.0
+     **/
+    void add(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                return;
+        }
+        m_delegates.push_back(callback);
+    }
+    /*}}}*/
+    // void remove(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void remove(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(_Target_t const *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
+    void remove(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(const Delegate &callback);/*{{{*/
+    /**
+     * Removes a callback function from the list of this event.
+     * @param callback Reference to the delegate object. This delegate object
+     * must be build with the same pointer object and function that was
+     * previously added to this event.
+     * @since 1.0
+     **/
+    void remove(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                it = m_delegates.erase(it);
+            else
+                ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
     /** @name Overloaded Operators */ //@{
     // EventT& operator <<(const Delegate &delegate);/*{{{*/
     /**
@@ -326,6 +436,116 @@ public:
     /*}}}*/
     //@}
 
+    /** @name Helpers */ //@{
+    // void add(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
+    void add(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        add( d );
+    }
+    /*}}}*/
+    // void add(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
+    void add(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( d );
+    }
+    /*}}}*/
+    // void add(const Delegate &callback);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param callback A reference to the Delegate object to add. The function
+     * will search the internal list of delegates, if this object was already
+     * added the function does nothing. That is, the same delegate will not be
+     * added twice to the same event.
+     * @since 1.0
+     **/
+    void add(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                return;
+        }
+        m_delegates.push_back(callback);
+    }
+    /*}}}*/
+    // void remove(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
+    void remove(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        remove( d );
+    }
+    /*}}}*/
+    // void remove(_Target_t const *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
+    void remove(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        remove( d );
+    }
+    /*}}}*/
+    // void remove(const Delegate &callback);/*{{{*/
+    /**
+     * Removes a callback function from the list of this event.
+     * @param callback Reference to the delegate object. This delegate object
+     * must be build with the same pointer object and function that was
+     * previously added to this event.
+     * @since 1.0
+     **/
+    void remove(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                it = m_delegates.erase(it);
+            else
+                ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
     /** @name Overloaded Operators */ //@{
     // EventT& operator <<(const Delegate &delegate);/*{{{*/
     /**
@@ -480,6 +700,116 @@ public:
         while (it != m_delegates.end()) {
             (*it).exec();
             ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Helpers */ //@{
+    // void add(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
+    void add(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        add( d );
+    }
+    /*}}}*/
+    // void add(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
+    void add(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( d );
+    }
+    /*}}}*/
+    // void add(const Delegate &callback);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param callback A reference to the Delegate object to add. The function
+     * will search the internal list of delegates, if this object was already
+     * added the function does nothing. That is, the same delegate will not be
+     * added twice to the same event.
+     * @since 1.0
+     **/
+    void add(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                return;
+        }
+        m_delegates.push_back(callback);
+    }
+    /*}}}*/
+    // void remove(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
+    void remove(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(_Target_t const *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.0
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)()>
+    void remove(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(const Delegate &callback);/*{{{*/
+    /**
+     * Removes a callback function from the list of this event.
+     * @param callback Reference to the delegate object. This delegate object
+     * must be build with the same pointer object and function that was
+     * previously added to this event.
+     * @since 1.0
+     **/
+    void remove(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                it = m_delegates.erase(it);
+            else
+                ++it;
         }
     }
     /*}}}*/
