@@ -1752,4 +1752,39 @@ bool operator !=(const ro::PropertyT<T> &left, const rw::PropertyT<G, S> &right)
 }
 /*}}}*/
 
+// #define GS(_Class_t, _GetterFn, _SetterFn)  _Class_t, & _Class_t :: _GetterFn, & _Class_t :: _SetterFn/*{{{*/
+/**
+ * Macro to help pass arguments to `ss::PropertyT` and `rw::PropertyT`
+ * objects.
+ * @param _Class_t Type of the class holding the getter and setter functions.
+ * @param _GetterFn Name of the getter member function.
+ * @param _SetterFn Name of the setter member function.
+ * @remarks The macro expands its arguments in a way that they will fit in the
+ * list of template parameter of the functions `bind()`. This macro can be
+ * used in the following way:
+ ~~~~~~~~~~~~~~~~~~~~~{.cpp}
+ * class MyObject {
+ * public:
+ *     ss::PropertyT<int> count;
+ *
+ *     MyObject();
+ *
+ * private:
+ *     int getCount() const;
+ *     void setCount(int value);
+ * };
+ *
+ * // In the implementation of the constructor:
+ * MyObject::MyObject() {
+ *     count.bind< GS(MyObject, getCount, setCount) >(this);
+ * }
+ ~~~~~~~~~~~~~~~~~~~~~
+ * The example shows usage with `ss::PropertyT` class but it is also valid for
+ * `rw::PropertyT` classes.
+ * @note \b GS stands for \bf{G}etter and \bf{S}etter.
+ * @since 1.0
+ **/
+#define GS(_Class_t, _GetterFn, _SetterFn)  _Class_t, & _Class_t :: _GetterFn, & _Class_t :: _SetterFn
+/*}}}*/
+
 #endif /* __SSTLPROP_HPP_DEFINED__ */

@@ -1045,4 +1045,33 @@ private:
 
 }   /* namespace ss */
 
+// #define CB(_Class_t, _MemberFn)     _Class_t, & _Class_t :: _MemberFn/*{{{*/
+/**
+ * Macro to help pass template arguments to `ss::FunctorT` classes.
+ * @param _Class_t Type of object having the member function.
+ * @param _MemberFn Name of the member function to set.
+ * @remarks The macro simply expands the arguments in a way that fits in the
+ * list of template parameters of the functions `ss::FunctorT::bind()`. You
+ * can use this macro in this way:
+ ~~~~~~~~~~~~~~~~~~~~~{.cpp}
+ * // Declares a functor for a function receiving an int.
+ * ss::FunctorT<void (int)> functor;
+ *
+ * // Class definition
+ * class MyObject {
+ * public
+ *     void fn(int i); { ... }
+ * };
+ *
+ * // Instantiate the class object
+ * MyObject *obj = new MyObject;
+ *
+ * // Using the macro
+ * functor.bind< CB(MyObject, fn) >(obj);
+ ~~~~~~~~~~~~~~~~~~~~~
+ * @since 1.0
+ **/
+#define CB(_Class_t, _MemberFn)     _Class_t, & _Class_t :: _MemberFn
+/*}}}*/
+
 #endif /* __SSTLFUNC_HPP_DEFINED__ */
