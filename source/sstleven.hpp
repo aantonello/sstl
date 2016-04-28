@@ -219,8 +219,8 @@ public:
     void add(const Delegate &callback) {
         typename std::list<Delegate>::iterator it = m_delegates.begin();
         while (it != m_delegates.end()) {
-            if ((*it) == callback)
-                return;
+            if (callback == *it) return;
+            ++it;
         }
         m_delegates.push_back(callback);
     }
@@ -488,8 +488,8 @@ public:
     void add(const Delegate &callback) {
         typename std::list<Delegate>::iterator it = m_delegates.begin();
         while (it != m_delegates.end()) {
-            if ((*it) == callback)
-                return;
+            if (callback == *it) return;
+            ++it;
         }
         m_delegates.push_back(callback);
     }
@@ -757,8 +757,8 @@ public:
     void add(const Delegate &callback) {
         typename std::list<Delegate>::iterator it = m_delegates.begin();
         while (it != m_delegates.end()) {
-            if ((*it) == callback)
-                return;
+            if (callback == *it) return;
+            ++it;
         }
         m_delegates.push_back(callback);
     }

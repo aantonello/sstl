@@ -75,6 +75,15 @@ public:
      **/
     FunctorT() : m_host(NULL), m_call(NULL) { }
     /*}}}*/
+    // FunctorT(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) { }/*{{{*/
+    /**
+     * Copy constructor.
+     * @param other Another instance to copy its information.
+     * @since 1.0
+     **/
+    FunctorT(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) :
+        m_host(other.m_host), m_call(other.m_call) { }
+    /*}}}*/
     //@}
 
     // Static Functions
@@ -300,6 +309,19 @@ public:
         return ((m_host == other.m_host) && (m_call == other.m_call));
     }
     /*}}}*/
+    // FunctorT& operator =(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) { }/*{{{*/
+    /**
+     * Copy operator.
+     * @param other Another instance to copy its information.
+     * @return A reference to \b this instance.
+     * @since 1.0
+     **/
+    FunctorT& operator =(const FunctorT<_Return_t (_Param1_t, _Param2_t)> &other) {
+        m_host = other.m_host;
+        m_call = other.m_call;
+        return *this;
+    }
+    /*}}}*/
     //@}
 
 private:
@@ -387,6 +409,15 @@ public:
      * @since 1.0
      **/
     FunctorT() : m_host(NULL), m_call(NULL) { }
+    /*}}}*/
+    // FunctorT(const FunctorT<_Return_t (_Param_t)> &other) { }/*{{{*/
+    /**
+     * Copy constructor.
+     * @param other Another instance to copy its information.
+     * @since 1.0
+     **/
+    FunctorT(const FunctorT<_Return_t (_Param_t)> &other) :
+        m_host(other.m_host), m_call(other.m_call) { }
     /*}}}*/
     //@}
 
@@ -611,6 +642,19 @@ public:
         return ((m_host == other.m_host) && (m_call == other.m_call));
     }
     /*}}}*/
+    // FunctorT& operator =(const FunctorT<_Return_t (_Param_t)> &other) { }/*{{{*/
+    /**
+     * Copy operator.
+     * @param other Another instance to copy its information.
+     * @return A reference to \b this instance.
+     * @since 1.0
+     **/
+    FunctorT& operator =(const FunctorT<_Return_t (_Param_t)> &other) {
+        m_host = other.m_host;
+        m_call = other.m_call;
+        return *this;
+    }
+    /*}}}*/
     //@}
 
 private:
@@ -696,6 +740,15 @@ public:
      * @since 1.0
      **/
     FunctorT() : m_host(NULL), m_call(NULL) { }
+    /*}}}*/
+    // FunctorT(const FunctorT<_Return_t ()> &other) { }/*{{{*/
+    /**
+     * Copy constructor.
+     * @param other Another instance to copy its information.
+     * @since 1.0
+     **/
+    FunctorT(const FunctorT<_Return_t ()> &other) :
+        m_host(other.m_host), m_call(other.m_call) { }
     /*}}}*/
     //@}
 
@@ -916,6 +969,19 @@ public:
      **/
     bool operator ==(const FunctorT<_Return_t ()> &other) const {
         return ((m_host == other.m_host) && (m_call == other.m_call));
+    }
+    /*}}}*/
+    // FunctorT& operator =(const FunctorT<_Return_t ()> &other) { }/*{{{*/
+    /**
+     * Copy operator.
+     * @param other Another instance to copy its information.
+     * @return A reference to \b this instance.
+     * @since 1.0
+     **/
+    FunctorT& operator =(const FunctorT<_Return_t ()> &other) {
+        m_host = other.m_host;
+        m_call = other.m_call;
+        return *this;
     }
     /*}}}*/
     //@}
