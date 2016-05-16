@@ -259,7 +259,7 @@ public:
      * @since 1.0
      **/
     operator bool() const {
-        return (m_pointer != NULL);
+        return (data() != NULL);
     }
     /*}}}*/
     // bool operator!() const;/*{{{*/
@@ -277,7 +277,7 @@ public:
      * @since 1.0
      **/
     bool operator!() const {
-        return (m_pointer == NULL);
+        return (data() == NULL);
     }
     /*}}}*/
     // class_t* operator->() const;/*{{{*/

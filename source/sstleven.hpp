@@ -31,6 +31,10 @@ namespace ss {
  * function since there is no reason to create events returning non-void
  * values. We choose to require the function signature to make the event
  * declaration more easy to read and understand.
+ * @warning You should never delete the event owner when processing an event
+ * callback function. Since events have a list of callbacks, deleting the
+ * container will stop the list processing and others clients will never
+ * receive the event.
  * @since 1.0
  * @ingroup sstl_events
  *//* --------------------------------------------------------------------- */
@@ -57,13 +61,22 @@ public:
     typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t)> Delegate;
     /*}}}*/
 
-    /** @name Constructors */ //@{
+    /** @name Constructors & Destructor */ //@{
     // EventT();/*{{{*/
     /**
      * Default constructor.
      * @since 1.0
      **/
     EventT() { }
+    /*}}}*/
+    // ~EventT();/*{{{*/
+    /**
+     * Default destructor.
+     * @since 1.0
+     **/
+    ~EventT() {
+        m_delegates.clear();
+    }
     /*}}}*/
     //@}
 
@@ -91,9 +104,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void bind(_Target_t *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(target);
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        add( dl );
     }
     /*}}}*/
     // void bind(_Target_t const *target);/*{{{*/
@@ -109,9 +121,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void bind(_Target_t const *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( dl );
     }
     /*}}}*/
     // void unbound(_Target_t *target);/*{{{*/
@@ -161,6 +172,7 @@ public:
 
         while (it != m_delegates.end()) {
             (*it).exec(a1, a2);
+            if (m_delegates.empty()) break;
             ++it;
         }
     }
@@ -328,13 +340,22 @@ public:
     typedef typename ss::FunctorT<_Return_t (_Param_t)> Delegate;
     /*}}}*/
 
-    /** @name Constructors */ //@{
+    /** @name Constructors & Destructor */ //@{
     // EventT();/*{{{*/
     /**
      * Default constructor.
      * @since 1.0
      **/
     EventT() { }
+    /*}}}*/
+    // ~EventT();/*{{{*/
+    /**
+     * Default destructor.
+     * @since 1.0
+     **/
+    ~EventT() {
+        m_delegates.clear();
+    }
     /*}}}*/
     //@}
 
@@ -362,9 +383,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(_Target_t *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(target);
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        add( dl );
     }
     /*}}}*/
     // void bind(_Target_t const *target);/*{{{*/
@@ -380,9 +400,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(const _Target_t *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( dl );
     }
     /*}}}*/
     // void unbound(_Target_t *target);/*{{{*/
@@ -430,6 +449,7 @@ public:
 
         while (it != m_delegates.end()) {
             (*it).exec(param);
+            if (m_delegates.empty()) break;
             ++it;
         }
     }
@@ -598,13 +618,22 @@ public:
     typedef typename ss::FunctorT<_Return_t ()> Delegate;
     /*}}}*/
 
-    /** @name Constructors */ //@{
+    /** @name Constructors & Destructor */ //@{
     // EventT();/*{{{*/
     /**
      * Default constructor.
      * @since 1.0
      **/
     EventT() { }
+    /*}}}*/
+    // ~EventT();/*{{{*/
+    /**
+     * Default destructor.
+     * @since 1.0
+     **/
+    ~EventT() {
+        m_delegates.clear();
+    }
     /*}}}*/
     //@}
 
@@ -632,9 +661,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(target);
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        add( dl );
     }
     /*}}}*/
     // void bind(_Target_t const *target);/*{{{*/
@@ -650,9 +678,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t const *target) {
-        Delegate delegate;
-        delegate.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
-        m_delegates.push_back( delegate );
+        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( dl );
     }
     /*}}}*/
     // void unbound(_Target_t *target);/*{{{*/
@@ -699,6 +726,7 @@ public:
 
         while (it != m_delegates.end()) {
             (*it).exec();
+            if (m_delegates.empty()) break;
             ++it;
         }
     }
