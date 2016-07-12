@@ -181,7 +181,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ==(_Type_t value) const {
-        return (get() == value);
+        return (get() == _Value_t(value));
     }
     /*}}}*/
     // bool operator !=(_Type_t value) const;/*{{{*/
