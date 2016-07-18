@@ -165,6 +165,28 @@ public:
     //@}
 
     /** @name Comparison Operators */ //@{
+    // operator bool () const;/*{{{*/
+    /**
+     * Conversion to `bool` operator.
+     * @returns \b true when the value of this property can be convertible to
+     * a \b truthy result. \b false otherwise.
+     * @since 1.0
+     **/
+    operator bool () const {
+        return bool(get());
+    }
+    /*}}}*/
+    // bool operator ! () const;/*{{{*/
+    /**
+     * Negation operator.
+     * @returns \b true when the value of this property can be convertibal to
+     * a \b falsy result. \b false otherwise.
+     * @since 1.0
+     **/
+    bool operator ! () const {
+        return !bool(get());
+    }
+    /*}}}*/
     // bool operator ==(_Type_t value) const;/*{{{*/
     /**
      * Equality operator.
@@ -181,7 +203,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ==(_Type_t value) const {
-        return (get() == _Value_t(value));
+        return (get() == value);
     }
     /*}}}*/
     // bool operator !=(_Type_t value) const;/*{{{*/
@@ -1471,6 +1493,28 @@ public:
     //@}
 
     /** @name Comparison Operators */ //@{
+    // operator bool () const;/*{{{*/
+    /**
+     * Conversion to `bool` operator.
+     * @returns \b true when the value of this property can be convertible to
+     * a \b truthy result. \b false otherwise.
+     * @since 1.0
+     **/
+    operator bool () const {
+        return bool(get());
+    }
+    /*}}}*/
+    // bool operator ! () const;/*{{{*/
+    /**
+     * Negation operator.
+     * @returns \b true when the value of this property can be convertibal to
+     * a \b falsy result. \b false otherwise.
+     * @since 1.0
+     **/
+    bool operator ! () const {
+        return !bool(get());
+    }
+    /*}}}*/
     // bool operator ==(_Type_t value) const;/*{{{*/
     /**
      * Equality operator.
@@ -1487,7 +1531,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ==(_Type_t value) const {
-        return (get() == _Value_t(value));
+        return (get() == value);
     }
     /*}}}*/
     // bool operator !=(_Type_t value) const;/*{{{*/
@@ -1502,7 +1546,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator !=(_Type_t value) const {
-        return (get() != (_Value_t)value);
+        return (get() != value);
     }
     /*}}}*/
     // bool operator < (_Type_t value) const;/*{{{*/
@@ -1517,7 +1561,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator < (_Type_t value) const {
-        return (get() < (_Value_t)value);
+        return (get() < value);
     }
     /*}}}*/
     // bool operator <=(_Type_t value) const;/*{{{*/
@@ -1532,7 +1576,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator <=(_Type_t value) const {
-        return (get() <= (_Value_t)value);
+        return (get() <= value);
     }
     /*}}}*/
     // bool operator > (_Type_t value) const;/*{{{*/
@@ -1547,7 +1591,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator > (_Type_t value) const {
-        return (get() > (_Value_t)value);
+        return (get() > value);
     }
     /*}}}*/
     // bool operator >=(_Type_t value) const;/*{{{*/
@@ -1562,7 +1606,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator >=(_Type_t value) const {
-        return (get() >= (_Value_t)value);
+        return (get() >= value);
     }
     /*}}}*/
     // bool operator ==(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1581,7 +1625,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ==(const PropertyT<_Type_t> &value) const {
-        return (get() == (_Value_t)value.get());
+        return (get() == value.get());
     }
     /*}}}*/
     // bool operator !=(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1596,7 +1640,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator !=(const PropertyT<_Type_t> &value) const {
-        return (get() != (_Value_t)value.get());
+        return (get() != value.get());
     }
     /*}}}*/
     // bool operator < (const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1611,7 +1655,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator < (const PropertyT<_Type_t> &value) const {
-        return (get() < (_Value_t)value.get());
+        return (get() < value.get());
     }
     /*}}}*/
     // bool operator <=(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1626,7 +1670,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator <=(const PropertyT<_Type_t> &value) const {
-        return (get() <= (_Value_t)value.get());
+        return (get() <= value.get());
     }
     /*}}}*/
     // bool operator > (const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1641,7 +1685,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator > (const PropertyT<_Type_t> &value) const {
-        return (get() > (_Value_t)value.get());
+        return (get() > value.get());
     }
     /*}}}*/
     // bool operator >=(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1656,7 +1700,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator >=(const PropertyT<_Type_t> &value) const {
-        return (get() >= (_Value_t)value.get());
+        return (get() >= value.get());
     }
     /*}}}*/
     // bool operator ==(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1675,7 +1719,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ==(const ss::PropertyT<_Type_t> &value) const {
-        return (get() == (_Value_t)value.get());
+        return (get() == value.get());
     }
     /*}}}*/
     // bool operator !=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1690,7 +1734,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator !=(const ss::PropertyT<_Type_t> &value) const {
-        return (get() != (_Value_t)value.get());
+        return (get() != value.get());
     }
     /*}}}*/
     // bool operator < (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1705,7 +1749,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator < (const ss::PropertyT<_Type_t> &value) const {
-        return (get() < (_Value_t)value.get());
+        return (get() < value.get());
     }
     /*}}}*/
     // bool operator <=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1720,7 +1764,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator <=(const ss::PropertyT<_Type_t> &value) const {
-        return (get() <= (_Value_t)value.get());
+        return (get() <= value.get());
     }
     /*}}}*/
     // bool operator > (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1735,7 +1779,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator > (const ss::PropertyT<_Type_t> &value) const {
-        return (get() > (_Value_t)value.get());
+        return (get() > value.get());
     }
     /*}}}*/
     // bool operator >=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -1750,7 +1794,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator >=(const ss::PropertyT<_Type_t> &value) const {
-        return (get() >= (_Value_t)value.get());
+        return (get() >= value.get());
     }
     /*}}}*/
     // bool operator ==(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1767,7 +1811,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator ==(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() == (_Value_t)value.get());
+        return (get() == value.get());
     }
     /*}}}*/
     // bool operator !=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1783,7 +1827,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator !=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() != (_Value_t)value.get());
+        return (get() != value.get());
     }
     /*}}}*/
     // bool operator < (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1799,7 +1843,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator < (const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() < (_Value_t)value.get());
+        return (get() < value.get());
     }
     /*}}}*/
     // bool operator <=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1815,7 +1859,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator <=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() <= (_Value_t)value.get());
+        return (get() <= value.get());
     }
     /*}}}*/
     // bool operator > (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1831,7 +1875,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator > (const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() > (_Value_t)value.get());
+        return (get() > value.get());
     }
     /*}}}*/
     // bool operator >=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -1847,7 +1891,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator >=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() >= (_Value_t)value.get());
+        return (get() >= value.get());
     }
     /*}}}*/
     //@}
@@ -2371,7 +2415,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ||(_Type_t value) const {
-        return (get() || _Value_t(value));
+        return (get() || value);
     }
     /*}}}*/
     // bool operator &&(_Type_t value) const;/*{{{*/
@@ -2385,7 +2429,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator &&(_Type_t value) const {
-        return (get() && _Value_t(value));
+        return (get() && value);
     }
     /*}}}*/
     // bool operator ||(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -2399,7 +2443,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ||(const PropertyT<_Type_t> &value) const {
-        return (get() || (_Value_t)value.get());
+        return (get() || value.get());
     }
     /*}}}*/
     // bool operator &&(const PropertyT<_Type_t> &value) const;/*{{{*/
@@ -2413,7 +2457,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator &&(const PropertyT<_Type_t> &value) const {
-        return (get() && (_Value_t)value.get());
+        return (get() && value.get());
     }
     /*}}}*/
     // bool operator ||(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -2426,7 +2470,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator ||(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() || (_Value_t)value.get());
+        return (get() || value.get());
     }
     /*}}}*/
     // bool operator &&(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
@@ -2439,7 +2483,7 @@ public:
      **/
     template <typename _Get_t, typename _Set_t>
     bool operator &&(const rw::PropertyT<_Get_t, _Set_t> &value) const {
-        return (get() && (_Value_t)value.get());
+        return (get() && value.get());
     }
     /*}}}*/
     // bool operator ||(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -2453,7 +2497,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator ||(const ss::PropertyT<_Type_t> &value) const {
-        return (get() || (_Value_t)value.get());
+        return (get() || value.get());
     }
     /*}}}*/
     // bool operator &&(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
@@ -2467,7 +2511,7 @@ public:
      **/
     template <typename _Type_t>
     bool operator &&(const ss::PropertyT<_Type_t> &value) const {
-        return (get() && (_Value_t)value.get());
+        return (get() && value.get());
     }
     /*}}}*/
     //@}
