@@ -165,17 +165,6 @@ public:
     //@}
 
     /** @name Comparison Operators */ //@{
-    // operator bool () const;/*{{{*/
-    /**
-     * Conversion to `bool` operator.
-     * @returns \b true when the value of this property can be convertible to
-     * a \b truthy result. \b false otherwise.
-     * @since 1.0
-     **/
-    operator bool () const {
-        return bool(get());
-    }
-    /*}}}*/
     // bool operator ! () const;/*{{{*/
     /**
      * Negation operator.
@@ -1493,17 +1482,6 @@ public:
     //@}
 
     /** @name Comparison Operators */ //@{
-    // operator bool () const;/*{{{*/
-    /**
-     * Conversion to `bool` operator.
-     * @returns \b true when the value of this property can be convertible to
-     * a \b truthy result. \b false otherwise.
-     * @since 1.0
-     **/
-    operator bool () const {
-        return bool(get());
-    }
-    /*}}}*/
     // bool operator ! () const;/*{{{*/
     /**
      * Negation operator.
