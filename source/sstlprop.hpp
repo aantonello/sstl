@@ -871,7 +871,7 @@ public:
     //@}
 
     /** @name Boolean Operators */ //@{
-    // bool operator ||(_Value_t value) const;/*{{{*/
+    // bool operator ||(_Type_t value) const;/*{{{*/
     /**
      * Boolean "OR" operator.
      * @tparam _Type_t Data type of the passed parameter. This doesn't need to
@@ -881,11 +881,11 @@ public:
      * @since 1.0
      **/
     template <typename _Type_t>
-    bool operator ||(_Value_t value) const {
-        return (get() || value);
+    bool operator ||(_Type_t value) const {
+        return (get() || _Value_t(value));
     }
     /*}}}*/
-    // bool operator &&(_Value_t value) const;/*{{{*/
+    // bool operator &&(_Type_t value) const;/*{{{*/
     /**
      * Boolean "AND" operator.
      * @tparam _Type_t Data type of the passed parameter. This doesn't need to
@@ -895,11 +895,11 @@ public:
      * @since 1.0
      **/
     template <typename _Type_t>
-    bool operator &&(_Value_t value) const {
-        return (get() && value);
+    bool operator &&(_Type_t value) const {
+        return (get() && _Value_t(value));
     }
     /*}}}*/
-    // bool operator ||(const PropertyT<_Value_t> &value) const;/*{{{*/
+    // bool operator ||(const PropertyT<_Type_t> &value) const;/*{{{*/
     /**
      * Boolean "OR" operator.
      * @tparam _Type_t Data type of the passed parameter. This doesn't need to
@@ -909,11 +909,11 @@ public:
      * @since 1.0
      **/
     template <typename _Type_t>
-    bool operator ||(const PropertyT<_Value_t> &value) const {
-        return (get() || value.get());
+    bool operator ||(const PropertyT<_Type_t> &value) const {
+        return (get() || (_Value_t)value.get());
     }
     /*}}}*/
-    // bool operator &&(const PropertyT<_Value_t> &value) const;/*{{{*/
+    // bool operator &&(const PropertyT<_Type_t> &value) const;/*{{{*/
     /**
      * Boolean "AND" operator.
      * @tparam _Type_t Data type of the passed parameter. This doesn't need to
@@ -923,8 +923,8 @@ public:
      * @since 1.0
      **/
     template <typename _Type_t>
-    bool operator &&(const PropertyT<_Value_t> &value) const {
-        return (get() && value.get());
+    bool operator &&(const PropertyT<_Type_t> &value) const {
+        return (get() && (_Value_t)value.get());
     }
     /*}}}*/
     //@}
@@ -1470,6 +1470,1008 @@ public:
     /*}}}*/
     //@}
 
+    /** @name Comparison Operators */ //@{
+    // bool operator ==(_Type_t value) const;/*{{{*/
+    /**
+     * Equality operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value The value to compare to. Must be implicitly convertible to
+     * the type of this property object.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are equals. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ==(_Type_t value) const {
+        return (get() == _Value_t(value));
+    }
+    /*}}}*/
+    // bool operator !=(_Type_t value) const;/*{{{*/
+    /**
+     * Inequality operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @param value The value to compare to.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are different. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator !=(_Type_t value) const {
+        return (get() != (_Value_t)value);
+    }
+    /*}}}*/
+    // bool operator < (_Type_t value) const;/*{{{*/
+    /**
+     * Less than operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @param value The value to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator < (_Type_t value) const {
+        return (get() < (_Value_t)value);
+    }
+    /*}}}*/
+    // bool operator <=(_Type_t value) const;/*{{{*/
+    /**
+     * Less than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @param value The value to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator <=(_Type_t value) const {
+        return (get() <= (_Value_t)value);
+    }
+    /*}}}*/
+    // bool operator > (_Type_t value) const;/*{{{*/
+    /**
+     * Greater than operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @param value The value to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator > (_Type_t value) const {
+        return (get() > (_Value_t)value);
+    }
+    /*}}}*/
+    // bool operator >=(_Type_t value) const;/*{{{*/
+    /**
+     * Greater than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * passed value.
+     * @param value The value to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator >=(_Type_t value) const {
+        return (get() >= (_Value_t)value);
+    }
+    /*}}}*/
+    // bool operator ==(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Equality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property.
+     * @tparam _Type_t Data type of the property to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * argument.
+     * @param value The property to compare to. Must be implicitly convertible
+     * to the type of this property object.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are equals. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ==(const PropertyT<_Type_t> &value) const {
+        return (get() == (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator !=(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Inequality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property object.
+     * @param value The value to compare to.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are different. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator !=(const PropertyT<_Type_t> &value) const {
+        return (get() != (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator < (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Less than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator < (const PropertyT<_Type_t> &value) const {
+        return (get() < (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator <=(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Less than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator <=(const PropertyT<_Type_t> &value) const {
+        return (get() <= (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator > (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Greater than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator > (const PropertyT<_Type_t> &value) const {
+        return (get() > (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator >=(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Greater than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator >=(const PropertyT<_Type_t> &value) const {
+        return (get() >= (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator ==(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Equality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property.
+     * @tparam _Type_t Data type of the property to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * argument.
+     * @param value The property to compare to. Must be implicitly convertible
+     * to the type of this property object.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are equals. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ==(const ss::PropertyT<_Type_t> &value) const {
+        return (get() == (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator !=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Inequality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property object.
+     * @param value The value to compare to.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are different. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator !=(const ss::PropertyT<_Type_t> &value) const {
+        return (get() != (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator < (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Less than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator < (const ss::PropertyT<_Type_t> &value) const {
+        return (get() < (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator <=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Less than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator <=(const ss::PropertyT<_Type_t> &value) const {
+        return (get() <= (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator > (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Greater than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator > (const ss::PropertyT<_Type_t> &value) const {
+        return (get() > (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator >=(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Greater than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator >=(const ss::PropertyT<_Type_t> &value) const {
+        return (get() >= (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator ==(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Equality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The property to compare to. Must be implicitly convertible
+     * to the type of this property object.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are equals. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator ==(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() == (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator !=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Inequality operator.
+     * Compares the value of the property pointed by this object with the
+     * value pointed by another property object.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The value to compare to.
+     * @return \b true if the passed \a value and the value pointed by this
+     * property are different. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator !=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() != (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator < (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Less than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator < (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() < (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator <=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Less than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{less than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator <=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() <= (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator > (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Greater than operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator > (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() > (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator >=(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Greater than or equal operator.
+     * Compares the value of the property pointed by this object with the
+     * value of another property object.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The property to compare to.
+     * @return \b true when the value returned by this property object is
+     * \it{greater than or equal} the passed \a value. \b false otherwise.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator >=(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() >= (_Value_t)value.get());
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Mathematical Operators */ //@{
+    // _Value_t operator + (_Type_t value) const;/*{{{*/
+    /**
+     * Addition operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator + (_Type_t value) const {
+        return (get() + value);
+    }
+    /*}}}*/
+    // _Value_t operator - (_Type_t value) const;/*{{{*/
+    /**
+     * Subtraction operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator - (_Type_t value) const {
+        return (get() - value);
+    }
+    /*}}}*/
+    // _Value_t operator * (_Type_t value) const;/*{{{*/
+    /**
+     * Multiplication operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator * (_Type_t value) const {
+        return (get() * value);
+    }
+    /*}}}*/
+    // _Value_t operator / (_Type_t value) const;/*{{{*/
+    /**
+     * Division operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator / (_Type_t value) const {
+        return (get() / value);
+    }
+    /*}}}*/
+    // _Value_t operator + (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Addition operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator + (const PropertyT<_Type_t> &value) const {
+        return (get() + value.get());
+    }
+    /*}}}*/
+    // _Value_t operator - (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Subtraction operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator - (const PropertyT<_Type_t> &value) const {
+        return (get() - value.get());
+    }
+    /*}}}*/
+    // _Value_t operator * (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Multiplication operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator * (const PropertyT<_Type_t> &value) const {
+        return (get() * value.get());
+    }
+    /*}}}*/
+    // _Value_t operator / (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Division operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator / (const PropertyT<_Type_t> &value) const {
+        return (get() / value.get());
+    }
+    /*}}}*/
+    // _Value_t operator + (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Addition operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator + (const ss::PropertyT<_Type_t> &value) const {
+        return (get() + value.get());
+    }
+    /*}}}*/
+    // _Value_t operator - (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Subtraction operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator - (const ss::PropertyT<_Type_t> &value) const {
+        return (get() - value.get());
+    }
+    /*}}}*/
+    // _Value_t operator * (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Multiplication operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator * (const ss::PropertyT<_Type_t> &value) const {
+        return (get() * value.get());
+    }
+    /*}}}*/
+    // _Value_t operator / (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Division operator.
+     * @tparam _Type_t Data type of the value to be compared. This doesn't
+     * need to be informed. The compiler can deduce the type by the passed
+     * value.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator / (const ss::PropertyT<_Type_t> &value) const {
+        return (get() / value.get());
+    }
+    /*}}}*/
+    // _Value_t operator + (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Addition operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator + (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() + value.get());
+    }
+    /*}}}*/
+    // _Value_t operator - (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Subtraction operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator - (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() - value.get());
+    }
+    /*}}}*/
+    // _Value_t operator * (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Multiplication operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator * (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() * value.get());
+    }
+    /*}}}*/
+    // _Value_t operator / (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Division operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another property object with the value to be added.
+     * @return The value resulting of the mathematical operation.
+     * @remarks This operator doesn't change the value of the property pointed
+     * by this object neither the value of the \a value parameter. Just the
+     * operation is done and the resulting value will be returned.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator / (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() / value.get());
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Bitwise Operators */ //@{
+    // _Value_t operator | (_Type_t value) const;/*{{{*/
+    /**
+     * Bitwise OR opeator.
+     * "OR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be "OR"ed with the value of this property.
+     * @return The result of the "OR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator | (_Type_t value) const {
+        return (get() | value);
+    }
+    /*}}}*/
+    // _Value_t operator & (_Type_t value) const;/*{{{*/
+    /**
+     * Bitwise AND opeator.
+     * "AND" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be "AND"ed with the value of this property.
+     * @return The result of the "AND"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator & (_Type_t value) const {
+        return (get() & value);
+    }
+    /*}}}*/
+    // _Value_t operator ^ (_Type_t value) const;/*{{{*/
+    /**
+     * Bitwise XOR opeator.
+     * "XOR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be "XOR"ed with the value of this property.
+     * @return The result of the "XOR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator ^ (_Type_t value) const {
+        return (get() ^ value);
+    }
+    /*}}}*/
+    // _Value_t operator ~ () const;/*{{{*/
+    /**
+     * Bitwise NOT opeator.
+     * "NOT" the value of this property object.
+     * @return The result of the "NOT"ed operation.
+     * @since 1.0
+     **/
+    _Value_t operator ~ () const {
+        return ~get();
+    }
+    /*}}}*/
+    // _Value_t operator | (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise OR opeator.
+     * "OR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "OR"ed with
+     * the value of this property.
+     * @return The result of the "OR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator | (const PropertyT<_Type_t> &value) const {
+        return (get() | value.get());
+    }
+    /*}}}*/
+    // _Value_t operator & (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise AND opeator.
+     * "AND" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "AND"ed with
+     * the value of this property.
+     * @return The result of the "AND"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator & (const PropertyT<_Type_t> &value) const {
+        return (get() & value.get());
+    }
+    /*}}}*/
+    // _Value_t operator ^ (const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise XOR opeator.
+     * "XOR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "XOR"ed with
+     * the value of this property.
+     * @return The result of the "XOR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator ^ (const PropertyT<_Type_t> &value) const {
+        return (get() ^ value.get());
+    }
+    /*}}}*/
+    // _Value_t operator | (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise OR opeator.
+     * "OR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "OR"ed with
+     * the value of this property.
+     * @return The result of the "OR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator | (const ss::PropertyT<_Type_t> &value) const {
+        return (get() | (_Value_t)value.get());
+    }
+    /*}}}*/
+    // _Value_t operator & (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise AND opeator.
+     * "AND" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "AND"ed with
+     * the value of this property.
+     * @return The result of the "AND"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator & (const ss::PropertyT<_Type_t> &value) const {
+        return (get() & (_Value_t)value.get());
+    }
+    /*}}}*/
+    // _Value_t operator ^ (const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Bitwise XOR opeator.
+     * "XOR" the value of this property object with the passed \a value.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value Another PropertyT object with the value to be "XOR"ed with
+     * the value of this property.
+     * @return The result of the "XOR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    _Value_t operator ^ (const ss::PropertyT<_Type_t> &value) const {
+        return (get() ^ (_Value_t)value.get());
+    }
+    /*}}}*/
+    // _Value_t operator | (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Bitwise OR opeator.
+     * "OR" the value of this property object with the passed \a value.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another PropertyT object with the value to be "OR"ed with
+     * the value of this property.
+     * @return The result of the "OR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator | (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() | (_Value_t)value.get());
+    }
+    /*}}}*/
+    // _Value_t operator & (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Bitwise AND opeator.
+     * "AND" the value of this property object with the passed \a value.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another PropertyT object with the value to be "AND"ed with
+     * the value of this property.
+     * @return The result of the "AND"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator & (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() & (_Value_t)value.get());
+    }
+    /*}}}*/
+    // _Value_t operator ^ (const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Bitwise XOR opeator.
+     * "XOR" the value of this property object with the passed \a value.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value Another PropertyT object with the value to be "XOR"ed with
+     * the value of this property.
+     * @return The result of the "XOR"ed operation.
+     * @remarks The value pointed by this property object is not changed in
+     * this operation.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    _Value_t operator ^ (const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() ^ (_Value_t)value.get());
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Boolean Operators */ //@{
+    // bool operator ||(_Type_t value) const;/*{{{*/
+    /**
+     * Boolean "OR" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ||(_Type_t value) const {
+        return (get() || _Value_t(value));
+    }
+    /*}}}*/
+    // bool operator &&(_Type_t value) const;/*{{{*/
+    /**
+     * Boolean "AND" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator &&(_Type_t value) const {
+        return (get() && _Value_t(value));
+    }
+    /*}}}*/
+    // bool operator ||(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Boolean "OR" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ||(const PropertyT<_Type_t> &value) const {
+        return (get() || (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator &&(const PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Boolean "AND" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator &&(const PropertyT<_Type_t> &value) const {
+        return (get() && (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator ||(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Boolean "OR" operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator ||(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() || (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator &&(const rw::PropertyT<_Get_t, _Set_t> &value) const;/*{{{*/
+    /**
+     * Boolean "AND" operator.
+     * @tparam _Get_t,_Set_t Data types of the `rw::PropertyT` template.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Get_t, typename _Set_t>
+    bool operator &&(const rw::PropertyT<_Get_t, _Set_t> &value) const {
+        return (get() && (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator ||(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Boolean "OR" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator ||(const ss::PropertyT<_Type_t> &value) const {
+        return (get() || (_Value_t)value.get());
+    }
+    /*}}}*/
+    // bool operator &&(const ss::PropertyT<_Type_t> &value) const;/*{{{*/
+    /**
+     * Boolean "AND" operator.
+     * @tparam _Type_t Data type of the passed parameter. This doesn't need to
+     * be informed. The compiler can deduce the type by the passed value.
+     * @param value The value to be compared.
+     * @return A boolean value result of the comparison.
+     * @since 1.0
+     **/
+    template <typename _Type_t>
+    bool operator &&(const ss::PropertyT<_Type_t> &value) const {
+        return (get() && (_Value_t)value.get());
+    }
+    /*}}}*/
+    //@}
+
 private:
     /** @name Disabled Constructor */ //@{
     // PropertyT(const PropertyT<_Value_t> &other);/*{{{*/
@@ -1614,40 +2616,6 @@ bool operator ==(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right)
     return (left.get() == right.get());
 }
 /*}}}*/
-// bool operator ==(const ro::PropertyT<T> &left, const ss::PropertyT<G> &right) {/*{{{*/
-/**
- * Comparison operator.
- * @param left An `ro::PropertyT` object to compare to.
- * @param right An `ss::PropertyT` object to compare with.
- * @return \b true if both properties have compatible and equal values. \b
- * false otherwise.
- * @remarks The underlining values of both properties must be implicit
- * convertible.
- * @since 1.0
- * @ingroup sstl_properties_operators
- **/
-template <typename T, typename G>
-bool operator ==(const ro::PropertyT<T> &left, const ss::PropertyT<G> &right) {
-    return (left.get() == right.get());
-}
-/*}}}*/
-// bool operator ==(const ro::PropertyT<T> &left, const rw::PropertyT<G> &right) {/*{{{*/
-/**
- * Comparison operator.
- * @param left An `ro::PropertyT` object to compare to.
- * @param right An `rw::PropertyT` object to compare with.
- * @return \b true if both properties have compatible and equal values. \b
- * false otherwise.
- * @remarks The underlining values of both properties must be implicit
- * convertible.
- * @since 1.0
- * @ingroup sstl_properties_operators
- **/
-template <typename T, typename G, typename S>
-bool operator ==(const ro::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
-    return (left.get() == right.get());
-}
-/*}}}*/
 
 // bool operator !=(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
 /**
@@ -1717,38 +2685,865 @@ bool operator !=(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right)
     return (left.get() != right.get());
 }
 /*}}}*/
-// bool operator !=(const ro::PropertyT<T> &left, const ss::PropertyT<G> &right) {/*{{{*/
+
+// bool operator < (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
 /**
- * Inequality operator.
- * @param left An `ro::PropertyT` object to compare to.
- * @param right An `ss::PropertyT` object to compare with.
- * @return \b false if both properties have compatible and equal values. \b
- * true otherwise.
- * @remarks The underlining values of both properties must be implicit
- * convertible.
- * @since 1.0
- * @ingroup sstl_properties_operators
- **/
-template <typename T, typename G>
-bool operator !=(const ro::PropertyT<T> &left, const ss::PropertyT<G> &right) {
-    return (left.get() != right.get());
-}
-/*}}}*/
-// bool operator !=(const ro::PropertyT<T> &left, const rw::PropertyT<G> &right) {/*{{{*/
-/**
- * Inequality operator.
- * @param left An `ro::PropertyT` object to compare to.
+ * Less than operator.
+ * @param left An `ss::PropertyT` object to compare to.
  * @param right An `rw::PropertyT` object to compare with.
- * @return \b false if both properties have compatible and equal values. \b
- * true otherwise.
+ * @return \b true when the value returned by this property object is
+ * \it{less than} the passed \a value. \b false otherwise.
  * @remarks The underlining values of both properties must be implicit
  * convertible.
  * @since 1.0
  * @ingroup sstl_properties_operators
  **/
 template <typename T, typename G, typename S>
-bool operator !=(const ro::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
-    return (left.get() != right.get());
+bool operator < (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() <  right.get());
+}
+/*}}}*/
+// bool operator < (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Less than operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator < (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() <  right.get());
+}
+/*}}}*/
+// bool operator < (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Less than operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator < (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() <  right.get());
+}
+/*}}}*/
+// bool operator < (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Less than operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator < (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() <  right.get());
+}
+/*}}}*/
+
+// bool operator <=(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Less than or equal operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+bool operator <=(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() <= right.get());
+}
+/*}}}*/
+// bool operator <=(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Less than or equal operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator <=(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() <= right.get());
+}
+/*}}}*/
+// bool operator <=(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Less than or equal operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator <=(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() <= right.get());
+}
+/*}}}*/
+// bool operator <=(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Less than or equal operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{less than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator <=(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() <= right.get());
+}
+/*}}}*/
+
+// bool operator > (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Greater than operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+bool operator > (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() >  right.get());
+}
+/*}}}*/
+// bool operator > (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Greater than operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator > (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() >  right.get());
+}
+/*}}}*/
+// bool operator > (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Greater than operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator > (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() >  right.get());
+}
+/*}}}*/
+// bool operator > (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Greater than operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator > (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() >  right.get());
+}
+/*}}}*/
+
+// bool operator >=(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Greater than or equal operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+bool operator >=(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() >= right.get());
+}
+/*}}}*/
+// bool operator >=(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Greater than or equal operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator >=(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() >= right.get());
+}
+/*}}}*/
+// bool operator >=(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Greater than or equal operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator >=(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() >= right.get());
+}
+/*}}}*/
+// bool operator >=(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Greater than or equal operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return \b true when the value returned by this property object is
+ * \it{greater than or equal} the passed \a value. \b false otherwise.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator >=(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() >= right.get());
+}
+/*}}}*/
+
+// T operator + (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator + (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() +  right.get());
+}
+/*}}}*/
+// T operator + (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator + (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() +  right.get());
+}
+/*}}}*/
+// T operator + (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator + (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() +  right.get());
+}
+/*}}}*/
+// T operator + (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Addition operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator + (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() +  right.get());
+}
+/*}}}*/
+
+// T operator - (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator - (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() -  right.get());
+}
+/*}}}*/
+// T operator - (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator - (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() -  right.get());
+}
+/*}}}*/
+// T operator - (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator - (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() -  right.get());
+}
+/*}}}*/
+// T operator - (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Subtraction operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator - (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() -  right.get());
+}
+/*}}}*/
+
+// T operator * (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Multiplication operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator * (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() *  right.get());
+}
+/*}}}*/
+// T operator * (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Multiplication operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator * (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() *  right.get());
+}
+/*}}}*/
+// T operator * (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Multiplication operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator * (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() *  right.get());
+}
+/*}}}*/
+// T operator * (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Multiplication operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator * (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() *  right.get());
+}
+/*}}}*/
+
+// T operator / (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Division operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator / (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() /  right.get());
+}
+/*}}}*/
+// T operator / (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Division operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator / (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() /  right.get());
+}
+/*}}}*/
+// T operator / (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Division operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator / (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() /  right.get());
+}
+/*}}}*/
+// T operator / (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Division operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The value resulting of the mathematical operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator / (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() /  right.get());
+}
+/*}}}*/
+
+// T operator | (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Bitwise OR opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The result of the "OR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator | (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() |  right.get());
+}
+/*}}}*/
+// T operator | (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Bitwise OR opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "OR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator | (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() |  right.get());
+}
+/*}}}*/
+// T operator | (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise OR opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The result of the "OR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator | (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() |  right.get());
+}
+/*}}}*/
+// T operator | (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise OR opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "OR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator | (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() |  right.get());
+}
+/*}}}*/
+
+// T operator & (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Bitwise AND opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The result of the "AND"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator & (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() &  right.get());
+}
+/*}}}*/
+// T operator & (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Bitwise AND opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "AND"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator & (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() &  right.get());
+}
+/*}}}*/
+// T operator & (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise AND opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The result of the "AND"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator & (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() &  right.get());
+}
+/*}}}*/
+// T operator & (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise AND opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "AND"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator & (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() &  right.get());
+}
+/*}}}*/
+
+// T operator ^ (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Bitwise XOR opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return The result of the "XOR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+T operator ^ (const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() ^  right.get());
+}
+/*}}}*/
+// T operator ^ (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Bitwise XOR opeator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "XOR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+T operator ^ (const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() ^  right.get());
+}
+/*}}}*/
+// T operator ^ (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise XOR opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return The result of the "XOR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator ^ (const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() ^  right.get());
+}
+/*}}}*/
+// T operator ^ (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Bitwise XOR opeator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return The result of the "XOR"ed operation.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+T operator ^ (const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() ^  right.get());
+}
+/*}}}*/
+
+// bool operator ||(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Boolean "OR" operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+bool operator ||(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() || right.get());
+}
+/*}}}*/
+// bool operator ||(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Boolean "OR" operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator ||(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() || right.get());
+}
+/*}}}*/
+// bool operator ||(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Boolean "OR" operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator ||(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() || right.get());
+}
+/*}}}*/
+// bool operator ||(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Boolean "OR" operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator ||(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() || right.get());
+}
+/*}}}*/
+
+// bool operator &&(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {/*{{{*/
+/**
+ * Boolean "AND" operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `rw::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G, typename S>
+bool operator &&(const ss::PropertyT<T> &left, const rw::PropertyT<G, S> &right) {
+    return (left.get() && right.get());
+}
+/*}}}*/
+// bool operator &&(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {/*{{{*/
+/**
+ * Boolean "AND" operator.
+ * @param left An `ss::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename T, typename G>
+bool operator &&(const ss::PropertyT<T> &left, const ro::PropertyT<G> &right) {
+    return (left.get() && right.get());
+}
+/*}}}*/
+// bool operator &&(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {/*{{{*/
+/**
+ * Boolean "AND" operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ss::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator &&(const rw::PropertyT<G, S> &left, const ss::PropertyT<T> &right) {
+    return (left.get() && right.get());
+}
+/*}}}*/
+// bool operator &&(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {/*{{{*/
+/**
+ * Boolean "AND" operator.
+ * @param left An `rw::PropertyT` object to compare to.
+ * @param right An `ro::PropertyT` object to compare with.
+ * @return A boolean value result of the comparison.
+ * @remarks The underlining values of both properties must be implicit
+ * convertible.
+ * @since 1.0
+ * @ingroup sstl_properties_operators
+ **/
+template <typename G, typename S, typename T>
+bool operator &&(const rw::PropertyT<G, S> &left, const ro::PropertyT<T> &right) {
+    return (left.get() && right.get());
 }
 /*}}}*/
 
