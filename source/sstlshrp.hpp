@@ -389,7 +389,7 @@ bool operator ==(const ss::SharedT<T> &one, const ss::SharedT<U> &another) {
 /**
  * Comparison to \b NULL operator.
  * @param one One instance of ss::SharedT object.
- * @param ptr An \b int value. Usually \b NULL.
+ * @param ptr An \b void pointer (e.g.: \b NULL).
  * @returns \b true when the shared pointer object passed at \p one is bound
  * to the pointer passed to \p ptr. This includes \b NULL pointers.
  * @since 1.0
@@ -420,7 +420,7 @@ bool operator !=(const ss::SharedT<T> &one, const ss::SharedT<U> &another) {
 /**
  * Comparison to \b NULL operator.
  * @param one One instance of ss::SharedT object.
- * @param ptr An \b int value. Usually \b NULL.
+ * @param ptr An \b void pointer (e.g.: \b NULL).
  * @returns \b true when the shared pointer object passed at \p one is bound
  * to a different pointer passed to \p ptr. This includes \b NULL pointers.
  * @since 1.0
