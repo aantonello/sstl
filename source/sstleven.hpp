@@ -41,6 +41,290 @@ namespace ss {
 template <typename _Signature_t> class EventT;
 
 /**
+ * Specialization of the EventT template class for functions with three
+ * arguments.
+ * @tparam _Return_t The return type of the function. Should be void.
+ * @tparam _Param1_t Type of first function parameter.
+ * @tparam _Param2_t Type of second function parameter.
+ * @tparam _Param3_t Type of second function parameter.
+ * @since 1.1
+ * @ingroup sstl_events
+ *//* --------------------------------------------------------------------- */
+template <typename _Return_t, typename _Param1_t, typename _Param2_t, typename _Param3_t>
+class EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)>
+{
+public:
+    // typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> Delegate;/*{{{*/
+    /**
+     * Type of the delegate to be bound to this event.
+     * Functors must be of this type to be bound to this event object.
+     **/
+    typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> Delegate;
+    /*}}}*/
+
+    /** @name Constructors & Destructor */ //@{
+    // EventT();/*{{{*/
+    /**
+     * Default constructor.
+     * @since 1.1
+     **/
+    EventT() { }
+    /*}}}*/
+    // ~EventT();/*{{{*/
+    /**
+     * Default destructor.
+     * @since 1.1
+     **/
+    ~EventT() {
+        m_delegates.clear();
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Attributes */ //@{
+    // size_t count() const;/*{{{*/
+    /**
+     * Retrieves the number of bound functors.
+     * @returns A `size_t` value with the number of bound functors.
+     * @since 1.1
+     **/
+    size_t count() const { return m_delegates.size(); }
+    /*}}}*/
+    //@}
+
+    /** @name Operations */ //@{
+    // void bind(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void bind(_Target_t *target) {
+        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        add( dl );
+    }
+    /*}}}*/
+    // void bind(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void bind(_Target_t const *target) {
+        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( dl );
+    }
+    /*}}}*/
+    // void unbound(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the delegate list.
+     * @tparam _Target_t Type of the target class object which member function
+     * was used to create the delegate. This template parameter may not be
+     * defined. The compiler can deduce it through the function parameter.
+     * @param target Pointer to the object instance that was used to create
+     * the delegate object. All delegates with this target object will be
+     * removed.
+     * @since 1.1
+     **/
+    template <class _Target_t>
+    void unbound(_Target_t *target) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end())
+        {
+            if ((*it).isHost((void *)target))
+                it = m_delegates.erase(it);
+            else
+                ++it;
+        }
+    }
+    /*}}}*/
+    // void link(EventT<_Return_t (_Param1_t, _Param2_t)> *e);/*{{{*/
+    /**
+     * Link an event to this event.
+     * @param e Pointer to the event object instance to link. Must have the
+     * same return value and parameters of this event.
+     * @since 1.0
+     **/
+    void link(EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> *e) {
+        bind<EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)>,
+            &EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)>::trigger>(e);
+    }
+    /*}}}*/
+    // void trigger(_Param1_t a1, _Param2_t a2, _Param3_t a3);/*{{{*/
+    /**
+     * Trigger the functions bound to this event object.
+     * @param a1 Argument to pass as the first parameter.
+     * @param a2 Argument to pass as the second parameter.
+     * @param a3 Argument to pass as the third parameter.
+     * @since 1.1
+     **/
+    void trigger(_Param1_t a1, _Param2_t a2, _Param3_t a3) {
+        typename std::list< Delegate >::iterator it = m_delegates.begin();
+
+        while (it != m_delegates.end()) {
+            (*it).exec(a1, a2, a3);
+            if (m_delegates.empty()) break;
+            ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Helpers */ //@{
+    // void add(_Target_t *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void add(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        add( d );
+    }
+    /*}}}*/
+    // void add(_Target_t const *target);/*{{{*/
+    /**
+     * Add a new functor object in the list of delegates.
+     * This is an overloaded member function.
+     * @tparam _Target_t Type of the target class object which member function
+     * must be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be invoked.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method will be called.
+     * @remarks This function uses `add(const Delegate &)` to build and adds
+     * a callback to the list of delegates of this event. This means that
+     * a delegate already added to this event will not be duplicated.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void add(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        add( d );
+    }
+    /*}}}*/
+    // void add(const Delegate &callback);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param callback A reference to the Delegate object to add. The function
+     * will search the internal list of delegates, if this object was already
+     * added the function does nothing. That is, the same delegate will not be
+     * added twice to the same event.
+     * @since 1.1
+     **/
+    void add(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if (callback == *it) return;
+            ++it;
+        }
+        m_delegates.push_back(callback);
+    }
+    /*}}}*/
+    // void remove(_Target_t *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void remove(_Target_t *target) {
+        Delegate d; d.bind<_Target_t, _Method>(target);
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(_Target_t const *target);/*{{{*/
+    /**
+     * Removes a delegate from the list of delegates of this event.
+     * @tparam _Target_t Type of the target class object which member function
+     * used to be called when the event is invoked.
+     * @tparam _Method Pointer to the member function to be removed.
+     * @param target Pointer to the instance of \a _Target_t object on the \a
+     * _Method to be removed.
+     * @since 1.1
+     **/
+    template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
+    void remove(_Target_t const *target) {
+        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        remove(d);
+    }
+    /*}}}*/
+    // void remove(const Delegate &callback);/*{{{*/
+    /**
+     * Removes a callback function from the list of this event.
+     * @param callback Reference to the delegate object. This delegate object
+     * must be build with the same pointer object and function that was
+     * previously added to this event.
+     * @since 1.1
+     **/
+    void remove(const Delegate &callback) {
+        typename std::list<Delegate>::iterator it = m_delegates.begin();
+        while (it != m_delegates.end()) {
+            if ((*it) == callback)
+                it = m_delegates.erase(it);
+            else
+                ++it;
+        }
+    }
+    /*}}}*/
+    //@}
+
+    /** @name Overloaded Operators */ //@{
+    // EventT& operator <<(const Delegate &delegate);/*{{{*/
+    /**
+     * Adds a delegate object into the list of this event.
+     * @param delegate The delegate object to be added.
+     * @return A reference to this event instance.
+     * @since 1.0
+     **/
+    EventT& operator <<(const Delegate &delegate) {
+        m_delegates.push_back(delegate);
+        return *this;
+    }
+    /*}}}*/
+    // void operator ()(_Param1_t a1, _Param2_t a2, _Param3_t a3);/*{{{*/
+    /**
+     * Invokes all delegates in the list of this event.
+     * @param a1 Argument for first function parameter.
+     * @param a2 Argument for second function parameter.
+     * @param a3 Argument for third function parameter.
+     * @remarks All bound functors will be called in the same sequence as they
+     * was added to the list.
+     * @since 1.0
+     **/
+    void operator ()(_Param1_t a1, _Param2_t a2, _Param3_t a3) {
+        this->trigger(a1, a2, a3);
+    }
+    /*}}}*/
+    //@}
+
+private:
+    std::list<Delegate> m_delegates;
+};
+
+/**
  * Specialization of the EventT template class for functions with two
  * arguments.
  * @tparam _Return_t The return type of the function. Should be void.

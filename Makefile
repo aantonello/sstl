@@ -16,7 +16,7 @@ docs-all : docs docs-clean docs-install
 # Local Variables
 # ============================================================================
 MAJOR_VERSION = 1
-MINOR_VERSION = 0
+MINOR_VERSION = 1
 BUILD_VERSION = 50
 VERSION_NUMBER = $(MAJOR_VERSION).$(MINOR_VERSION)
 DOXYGEN_VERSION = $(VERSION_NUMBER).$(BUILD_VERSION)
