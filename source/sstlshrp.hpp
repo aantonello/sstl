@@ -120,7 +120,7 @@ public:
      * Builds an empty object. It is bound to anything.
      * @since 1.0
      **/
-    SharedT() { m_pointer = NULL; }
+    SharedT() : m_pointer(NULL) { }
     /*}}}*/
     // SharedT(const SharedT<class_t> &other);/*{{{*/
     /**
@@ -130,8 +130,7 @@ public:
      * Reference counting will be incremented.
      * @since 1.0
      **/
-    SharedT(const SharedT<class_t> &other) {
-        m_pointer = other.m_pointer;
+    SharedT(const SharedT<class_t> &other) : m_pointer(other.m_pointer) {
         retain();
     }
     /*}}}*/
@@ -144,9 +143,7 @@ public:
      * instances of \c SharedT objects.
      * @since 1.0
      **/
-    explicit SharedT(class_t *ptr) {
-        m_pointer = new pointer_t(ptr);
-    }
+    explicit SharedT(class_t *ptr) : m_pointer(new pointer_t(ptr)) { }
     /*}}}*/
     // SharedT(class_t *ptr, void (*destructor)(_Class_t*));/*{{{*/
     /**
