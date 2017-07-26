@@ -54,6 +54,7 @@ template <typename _Return_t, typename _Param1_t, typename _Param2_t, typename _
 class EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)>
 {
 public:
+    typedef EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> _event_t;
     // typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> Delegate;/*{{{*/
     /**
      * Type of the delegate to be bound to this event.
@@ -99,13 +100,14 @@ public:
      * @tparam _Target_t Type of the target class object which member function
      * must be called when the event is invoked.
      * @tparam _Method Pointer to the member function to be invoked.
-     * @param target Pointer to the instance of \a _Target_t object on the \a
-     * _Method will be called.
+     * @param target Pointer to the instance that owns the function pointed at
+     * \a _Method template parameter.
      * @since 1.1
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void bind(_Target_t *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        _event_t::Delegate dl;
+        dl.bind<_Target_t, _Method>(target);
         add( dl );
     }
     /*}}}*/
@@ -122,7 +124,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void bind(_Target_t const *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        _event_t::Delegate dl;
+        dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( dl );
     }
     /*}}}*/
