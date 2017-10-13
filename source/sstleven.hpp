@@ -54,7 +54,6 @@ template <typename _Return_t, typename _Param1_t, typename _Param2_t, typename _
 class EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)>
 {
 public:
-    typedef EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> _event_t;
     // typedef typename ss::FunctorT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> Delegate;/*{{{*/
     /**
      * Type of the delegate to be bound to this event.
@@ -106,8 +105,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void bind(_Target_t *target) {
-        _event_t::Delegate dl;
-        dl.bind<_Target_t, _Method>(target);
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(target);
         add( dl );
     }
     /*}}}*/
@@ -124,8 +123,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void bind(_Target_t const *target) {
-        _event_t::Delegate dl;
-        dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( dl );
     }
     /*}}}*/
@@ -152,7 +151,7 @@ public:
         }
     }
     /*}}}*/
-    // void link(EventT<_Return_t (_Param1_t, _Param2_t)> *e);/*{{{*/
+    // void link(EventT<_Return_t (_Param1_t, _Param2_t, _Param3_t)> *e);/*{{{*/
     /**
      * Link an event to this event.
      * @param e Pointer to the event object instance to link. Must have the
@@ -200,7 +199,7 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void add(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d; d.template bind<_Target_t, _Method>(target);
         add( d );
     }
     /*}}}*/
@@ -220,7 +219,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void add(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( d );
     }
     /*}}}*/
@@ -254,7 +254,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void remove(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         remove(d);
     }
     /*}}}*/
@@ -270,7 +271,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t, _Param3_t)>
     void remove(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         remove(d);
     }
     /*}}}*/
@@ -391,7 +393,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void bind(_Target_t *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(target);
         add( dl );
     }
     /*}}}*/
@@ -408,7 +411,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void bind(_Target_t const *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( dl );
     }
     /*}}}*/
@@ -482,7 +486,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void add(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         add( d );
     }
     /*}}}*/
@@ -502,7 +507,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void add(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( d );
     }
     /*}}}*/
@@ -536,7 +542,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void remove(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         remove(d);
     }
     /*}}}*/
@@ -552,7 +559,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param1_t, _Param2_t)>
     void remove(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         remove(d);
     }
     /*}}}*/
@@ -670,7 +678,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(_Target_t *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(target);
         add( dl );
     }
     /*}}}*/
@@ -687,7 +696,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void bind(const _Target_t *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( dl );
     }
     /*}}}*/
@@ -759,7 +769,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void add(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         add( d );
     }
     /*}}}*/
@@ -779,7 +790,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void add(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( d );
     }
     /*}}}*/
@@ -813,7 +825,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void remove(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         remove( d );
     }
     /*}}}*/
@@ -829,7 +842,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)(_Param_t)>
     void remove(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         remove( d );
     }
     /*}}}*/
@@ -948,7 +962,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(target);
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(target);
         add( dl );
     }
     /*}}}*/
@@ -965,7 +980,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void bind(_Target_t const *target) {
-        Delegate dl; dl.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate dl;
+        dl.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( dl );
     }
     /*}}}*/
@@ -1036,7 +1052,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void add(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         add( d );
     }
     /*}}}*/
@@ -1056,7 +1073,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void add(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         add( d );
     }
     /*}}}*/
@@ -1090,7 +1108,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void remove(_Target_t *target) {
-        Delegate d; d.bind<_Target_t, _Method>(target);
+        Delegate d;
+        d.template bind<_Target_t, _Method>(target);
         remove(d);
     }
     /*}}}*/
@@ -1106,7 +1125,8 @@ public:
      **/
     template <class _Target_t, _Return_t (_Target_t::*_Method)()>
     void remove(_Target_t const *target) {
-        Delegate d; d.bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
+        Delegate d;
+        d.template bind<_Target_t, _Method>(const_cast<_Target_t*>(target));
         remove(d);
     }
     /*}}}*/
